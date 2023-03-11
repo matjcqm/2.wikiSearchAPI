@@ -25,7 +25,7 @@ main{
 }
 
 h1{
-  font-size: (50px, 5vw, 250px);
+  font-size: 5vw;
   color: #333;
   font-weight: 100;
 }
@@ -38,8 +38,15 @@ form{
   max-width: 800px;
 }
 input{
-  width: 80vw;
+  width: 50vw;
   height: 5vw;
   padding-left: 10px;
+  font-size: 2vw;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
 }
 
+.resultsDisplay{
+  max-width: 600px;
+}
