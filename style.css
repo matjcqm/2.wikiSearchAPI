@@ -1,0 +1,45 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100vh;
+  background: #f1f1f1;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: clamp(20px, 5vw, 50px) 20px 20px;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: clamp(10px, 5vw, 30px);
+}
+
+.wiki-logo{
+  width: clamp(50px, 30vw, 250px);
+}
+
+h1{
+  font-size: (50px, 5vw, 250px);
+  color: #333;
+  font-weight: 100;
+}
+
+span{
+  font-weight: 800;
+}
+
+form{
+  max-width: 800px;
+}
+input{
+  width: 80vw;
+  height: 5vw;
+  padding-left: 10px;
+}
+
