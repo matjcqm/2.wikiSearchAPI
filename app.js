@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
 const input = document.querySelector("input");
 const errorText = document.querySelector(".errorText");
+const resultsDisplay = document.querySelector(".resultsDisplay");
+const loader = document.querySelector(".loader");
 
 form.addEventListener("submit", handleSubmit);
 
@@ -11,24 +13,32 @@ function handleSubmit(e) {
     return;
   } else {
     errorText.textContent = "";
+    loader.style.display = "flex";
+    resultsDisplay.textContent = "";
     wikiApiCall(input.value);
   }
 }
 
 async function wikiApiCall(searchInput) {
-  const response = await fetch(
-    `https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=20&srsearch=${searchInput}`
-  );
-
-  const data = await response.json();
-  createCards(data.query.search);
+  try {
+    const response = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=20&srsearch=${searchInput}`
+    );
+    if (!response.ok) {
+      throw new Error(`${response.status}`);
+    }
+    const data = await response.json();
+    createCards(data.query.search);
+  } catch (error) {
+    errorText.textContent = `${error}`;
+    loader.style.display = "none";
+  }
 }
-
-const resultsDisplay = document.querySelector(".resultsDisplay");
 
 function createCards(data) {
   if (!data.length) {
     errorText.textContent = "Pas de résultat";
+    loader.style.display = "none";
     return;
   }
   data.map((el) => {
@@ -40,10 +50,11 @@ function createCards(data) {
             <a href=${url} target="_blank">${el.title}</a>
         </h3>
         <a href=${url} class="result-link" target="_blank">${url}</a>
-        <span class="result-snippet">${el.snippet}</span>
         <br>
+        <p class="result-snippet">${el.snippet}</p>
         `;
 
     resultsDisplay.appendChild(card);
   });
+  loader.style.display = "none";
 }
